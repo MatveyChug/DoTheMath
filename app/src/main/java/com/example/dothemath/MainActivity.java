@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.Toast;
+
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         //заполнение строк примерами
         equationOne.setText(equationValue[0] + " + " + equationValue[1] + " = ");
         equationTwo.setText(equationValue[2] + " - " + equationValue[3] + " = ");
-        equationThree.setText(equationValue[4] + " + " + equationValue[5] + " = ");
+        equationThree.setText(equationValue[4] + " * " + equationValue[5] + " = ");
 
         // обработка фокусировки/снятие фокусировки с EditText
         solvingOne.setOnFocusChangeListener(focusListener);
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 //заполнение строк примерами для решения
                 equationOne.setText(equationValue[0] + " + " + equationValue[1] + " = ");
                 equationTwo.setText(equationValue[2] + " - " + equationValue[3] + " = ");
-                equationThree.setText(equationValue[4] + " + " + equationValue[5] + " = ");
+                equationThree.setText(equationValue[4] + " * " + equationValue[5] + " = ");
                 //задание исходного цвета
                 solvingOne.setBackgroundColor(Color.rgb(0xE7,0xE4,0xEC));//исходный цвет
                 solvingTwo.setBackgroundColor(Color.rgb(0xE7,0xE4,0xEC));
@@ -81,45 +83,60 @@ public class MainActivity extends AppCompatActivity {
             switch (view.getId()){
                 case R.id.solvingOne:
                     if(!b) {
-                        //при потери фокуса производим проверку введенного числа
-                        // если посчитано верно
-                        if(Integer.parseInt(solvingOne.getText().toString()) == (equationValue[0] + equationValue[1])) {
-                            solvingOne.setBackgroundColor(Color.GREEN); // закрашиваем в зелённый цвет
-                            right = true;
-                        } else { // иначе
-                            solvingOne.setBackgroundColor(Color.RED); // закрашиваем в красный цвет
-                            right = false;
+                        try {
+                            //при потери фокуса производим проверку введенного числа
+                            // если посчитано верно
+                            if(Integer.parseInt(solvingOne.getText().toString()) == (equationValue[0] + equationValue[1])) {
+                                solvingOne.setBackgroundColor(Color.GREEN); // закрашиваем в зелённый цвет
+                                right = true;
+                            } else { // иначе
+                                solvingOne.setBackgroundColor(Color.RED); // закрашиваем в красный цвет
+                                right = false;
+                            }
+                        } catch(NumberFormatException exception) {
+                            //очистка edittext
+                            solvingOne.setText("");
+                            Toast.makeText(MainActivity.this,"Вы не дали ответа",Toast.LENGTH_SHORT).show();
                         }
-                    }
+                        }
                     break;
                 case R.id.solvingTwo:
                     if(!b) {
-                        //при потери фокуса производим проверку введенного числа
-                        // если посчитано верно
-                        if(Integer.parseInt(solvingOne.getText().toString()) == (equationValue[0] + equationValue[1])) {
-                            solvingTwo.setBackgroundColor(Color.GREEN); // закрашиваем в зелённый цвет
-                            right = true;
-                        } else { // иначе
-                            solvingTwo.setBackgroundColor(Color.RED); // закрашиваем в красный цвет
-                            right = false;
+                        try {
+                            //при потери фокуса производим проверку введенного числа
+                            // если посчитано верно
+                            if(Integer.parseInt(solvingTwo.getText().toString()) == (equationValue[0] + equationValue[1])) {
+                                solvingTwo.setBackgroundColor(Color.GREEN); // закрашиваем в зелённый цвет
+                                right = true;
+                            } else { // иначе
+                                solvingTwo.setBackgroundColor(Color.RED); // закрашиваем в красный цвет
+                                right = false;
+                            }
+                        } catch(NumberFormatException exception) {
+                            //очистка edittext
+                            solvingTwo.setText("");
+                            Toast.makeText(MainActivity.this,"Вы не дали ответа",Toast.LENGTH_SHORT).show();
                         }
-
                     }
                     break;
                 case R.id.solvingThree:
-                    if(!b) { //при потери фокуса производим проверку введенного числа
+                    if(!b) { try {
+                        //при потери фокуса производим проверку введенного числа
                         // если посчитано верно
-                        if(Integer.parseInt(solvingOne.getText().toString()) == (equationValue[0] + equationValue[1])) {
+                        if(Integer.parseInt(solvingThree.getText().toString()) == (equationValue[0] + equationValue[1])) {
                             solvingThree.setBackgroundColor(Color.GREEN); // закрашиваем в зелённый цвет
                             right = true;
                         } else { // иначе
                             solvingThree.setBackgroundColor(Color.RED); // закрашиваем в красный цвет
                             right = false;
                         }
+                    } catch(NumberFormatException exception) {
+                        //очистка edittext
+                        solvingThree.setText("");
+                        Toast.makeText(MainActivity.this,"Вы не дали ответа",Toast.LENGTH_SHORT).show();
+                    }
                     }
                     break;
-
-
     }}
     };
 
